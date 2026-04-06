@@ -1,22 +1,23 @@
-package org.example.selenium.core.pages;
+package org.example.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class CadastroAtivoPage extends BasePage {
 
-    private final By campoItem = By.name("item");
-    private final By campoFabricante = By.name("fabricante");
+    private final By campoStatus = By.name("statusItem");
+    private final By campoNumeroPatrimonio = By.name("numeroPatrimonio");
+    private final By campoNomeItem = By.name("nomeItem");
     private final By campoModelo = By.name("modelo");
-    private final By campoSerial = By.name("serial");
-    private final By campoNotaFiscal = By.name("notaFiscal");
-    private final By campoValor = By.name("valor");
-    private final By campoFornecedor = By.name("fornecedor");
-    private final By campoDataEmissao = By.name("dataEmissao");
+    private final By campoNumeroSerie = By.name("numeroSerie");
+    private final By campoVoltagem = By.name("voltagem");
+    private final By campoNumRI = By.name("numRI");
+    private final By campoFornecedor = By.name("idFornecedor");
+    private final By campoDescricao = By.name("descricao");
 
-    private final By botaoSalvar = By.cssSelector("button[type='submit']");
-    private final By mensagemSucesso = By.className("alert");
-    private final By tabelaAtivos = By.tagName("table");
+    private final By botaoSalvar = By.xpath("//button[@type='submit' and contains(text(),'Salvar')]");
+    private final By botaoLimpar = By.xpath("//button[@type='button' and contains(text(),'Limpar')]");
 
     public CadastroAtivoPage(WebDriver driver) {
         super(driver);
@@ -27,13 +28,19 @@ public class CadastroAtivoPage extends BasePage {
         return this;
     }
 
-    public CadastroAtivoPage preencherItem(String item) {
-        type(campoItem, item);
+    public CadastroAtivoPage selecionarStatus(String status) {
+        Select select = new Select($(campoStatus));
+        select.selectByVisibleText(status);
         return this;
     }
 
-    public CadastroAtivoPage preencherFabricante(String fabricante) {
-        type(campoFabricante, fabricante);
+    public CadastroAtivoPage preencherNumeroPatrimonio(String numeroPatrimonio) {
+        type(campoNumeroPatrimonio, numeroPatrimonio);
+        return this;
+    }
+
+    public CadastroAtivoPage preencherNomeItem(String nomeItem) {
+        type(campoNomeItem, nomeItem);
         return this;
     }
 
@@ -42,28 +49,30 @@ public class CadastroAtivoPage extends BasePage {
         return this;
     }
 
-    public CadastroAtivoPage preencherSerial(String serial) {
-        type(campoSerial, serial);
+    public CadastroAtivoPage preencherNumeroSerie(String numeroSerie) {
+        type(campoNumeroSerie, numeroSerie);
         return this;
     }
 
-    public CadastroAtivoPage preencherNotaFiscal(String notaFiscal) {
-        type(campoNotaFiscal, notaFiscal);
+    public CadastroAtivoPage selecionarVoltagem(String voltagem) {
+        Select select = new Select($(campoVoltagem));
+        select.selectByVisibleText(voltagem);
         return this;
     }
 
-    public CadastroAtivoPage preencherValor(String valor) {
-        type(campoValor, valor);
+    public CadastroAtivoPage preencherNumRI(String numRI) {
+        type(campoNumRI, numRI);
         return this;
     }
 
-    public CadastroAtivoPage preencherFornecedor(String fornecedor) {
-        type(campoFornecedor, fornecedor);
+    public CadastroAtivoPage selecionarFornecedor(String fornecedor) {
+        Select select = new Select($(campoFornecedor));
+        select.selectByVisibleText(fornecedor);
         return this;
     }
 
-    public CadastroAtivoPage preencherDataEmissao(String dataEmissao) {
-        type(campoDataEmissao, dataEmissao);
+    public CadastroAtivoPage preencherDescricao(String descricao) {
+        type(campoDescricao, descricao);
         return this;
     }
 
@@ -72,19 +81,47 @@ public class CadastroAtivoPage extends BasePage {
         return this;
     }
 
-    public boolean mensagemSucessoVisivel() {
-        return $(mensagemSucesso).isDisplayed();
+    public CadastroAtivoPage clicarLimpar() {
+        click(botaoLimpar);
+        return this;
     }
 
-    public String obterMensagemSucesso() {
-        return $(mensagemSucesso).getText();
+    public String obterValorNumeroPatrimonio() {
+        return $(campoNumeroPatrimonio).getAttribute("value");
     }
 
-    public boolean foiParaListaDeAtivos() {
-        return driver.getCurrentUrl().contains("/theme/ativos");
+    public String obterValorNomeItem() {
+        return $(campoNomeItem).getAttribute("value");
     }
 
-    public boolean tabelaVisivel() {
-        return $(tabelaAtivos).isDisplayed();
+    public String obterValorModelo() {
+        return $(campoModelo).getAttribute("value");
+    }
+
+    public String obterValorNumeroSerie() {
+        return $(campoNumeroSerie).getAttribute("value");
+    }
+
+    public String obterValorNumRI() {
+        return $(campoNumRI).getAttribute("value");
+    }
+
+    public String obterValorDescricao() {
+        return $(campoDescricao).getAttribute("value");
+    }
+
+    public String obterStatusSelecionado() {
+        Select select = new Select($(campoStatus));
+        return select.getFirstSelectedOption().getText();
+    }
+
+    public String obterVoltagemSelecionada() {
+        Select select = new Select($(campoVoltagem));
+        return select.getFirstSelectedOption().getText();
+    }
+
+    public String obterFornecedorSelecionado() {
+        Select select = new Select($(campoFornecedor));
+        return select.getFirstSelectedOption().getText();
     }
 }

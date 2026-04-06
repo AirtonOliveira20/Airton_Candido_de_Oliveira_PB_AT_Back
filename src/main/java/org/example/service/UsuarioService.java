@@ -45,11 +45,19 @@ public class UsuarioService {
         return UsuarioRepository.save(usuario);
     }
 
-    public boolean delete(Integer id) {
+    public boolean deleteUsuario(Integer id) {
         if (UsuarioRepository.existsById(id)) {
             UsuarioRepository.deleteById(id);
             return true;
         }
         return false;
     }
+
+    public Usuario autenticar(String email, String senha) {
+        return UsuarioRepository.findByEmailUsuario(email)
+                .filter(usuario -> usuario.getSenhaUsuario().equals(senha))
+                .orElse(null);
+    }
+
+
 }

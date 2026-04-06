@@ -2,11 +2,13 @@ package org.example.controller;
 
 import org.example.entity.Usuario;
 import org.example.service.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -45,9 +47,31 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluirUsuario(@PathVariable Integer id) {
-        boolean ok = usuarioService.delete(id);
-        if (!ok) return ResponseEntity.notFound().build();
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> excluirUsuario(@PathVariable Integer id) {
+
+        Usuario usuario = usuarioService.findById(id);
+
+        if (usuario == null) {
+            return new ResponseEntity<>("Erro: usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        usuarioService.deleteUsuario(id);
+
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestBody Usuario dadosLogin) {
+        Usuario usuario = usuarioService.autenticar(
+                dadosLogin.getEmailUsuario(),
+                dadosLogin.getSenhaUsuario()
+        );
+
+        if (usuario == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        usuario.setSenhaUsuario(null);
+        return ResponseEntity.ok(usuario);
     }
 }

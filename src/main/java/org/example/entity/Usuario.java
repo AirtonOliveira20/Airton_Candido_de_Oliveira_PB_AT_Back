@@ -11,15 +11,11 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
-
     private String nomeUsuario;
     private String emailUsuario;
     private String loginUsuario;
     private String senhaUsuario;
-
-
     private String tipoUsuario;
-
-    // true = usuáriou ativo, false = usuário desativado
     private Boolean status;
+
 }

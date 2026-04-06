@@ -1,7 +1,7 @@
-package org.example.selenium.core.test;
+package org.example.selenium.test;
 
 import org.example.selenium.core.BaseTest;
-import org.example.selenium.core.pages.LoginPage;
+import org.example.selenium.pages.LoginPage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

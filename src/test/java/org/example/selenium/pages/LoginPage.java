@@ -1,7 +1,8 @@
-package org.example.selenium.core.pages;
+package org.example.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
 
@@ -41,5 +42,18 @@ public class LoginPage extends BasePage {
 
     public boolean mensagemErroVisivel(){
         return $(mensagemErro).isDisplayed();
+    }
+
+    public void fazerLogin(String email, String senha) {
+        abrir();
+        preencherEmail(email);
+        preencherSenha(senha);
+        clicarLogin();
+
+        wait.until(ExpectedConditions.or(
+                ExpectedConditions.urlContains("dashboard"),
+                ExpectedConditions.urlContains("ativos"),
+                ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Itens cadastrados')]"))
+        ));
     }
 }

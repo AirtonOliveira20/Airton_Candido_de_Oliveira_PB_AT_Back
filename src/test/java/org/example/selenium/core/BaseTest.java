@@ -14,11 +14,11 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
-
+/*
     @AfterEach
     public void fecharDriver() {
         if (driver != null) {
             driver.quit();
         }
-    }
+    }*/
 }

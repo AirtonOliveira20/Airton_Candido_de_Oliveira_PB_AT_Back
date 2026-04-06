@@ -30,6 +30,8 @@ public class Item {
     @Column(name = "num_ri")
     private String numRI;
 
-    private Long idFornecedor;
+    @ManyToOne
+    @JoinColumn(name = "idFornecedor")
+    private Fornecedor idFornecedor;
 
 }

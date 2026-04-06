@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/fornecedores")
 public class FornecedorController {
@@ -19,7 +21,7 @@ public class FornecedorController {
 
     public FornecedorController(FornecedorService fornecedorService) { this.fornecedorService =  fornecedorService;}
 
-    //Buscar todas as informações
+
     @GetMapping
     public ResponseEntity<List<Fornecedor>> listarFornecedores () {
         List<Fornecedor> fornecedores = fornecedorService.findAll();
@@ -29,7 +31,7 @@ public class FornecedorController {
         return ResponseEntity.ok(fornecedores);
 
     }
-    //Consultar informação específica
+
 
     @GetMapping("{id}")
     public ResponseEntity<?> consultarFornecedor (@PathVariable Integer id){
@@ -39,8 +41,6 @@ public class FornecedorController {
         }
         return new ResponseEntity<>(fornecedor, HttpStatus.OK);
     }
-
-    //Deletar um id específico
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> excluirFornecedor(@PathVariable Integer id){

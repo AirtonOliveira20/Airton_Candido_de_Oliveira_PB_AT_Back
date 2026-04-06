@@ -16,17 +16,17 @@ VALUES ('SAMSUNG', '92165384000140', 'vendas@samsung.com.br', '(41) 2105-2105');
 INSERT INTO item
 (status_item, numero_patrimonio, nome_item, modelo, numero_serie, voltagem, descricao, num_ri, id_fornecedor)
 VALUES
-('ATIVO', 'PAT-1001', 'Notebook Corporativo', 'Dell Latitude 5420', 'SN-DEL-001', '110V', 'Notebook para uso administrativo', 'NR-001', 1);
+('ATIVO', '0001', 'Notebook Corporativo', 'Dell Latitude 5420', 'SN-DEL-001', '110V', 'Notebook para uso administrativo', '6000', 1);
 
 INSERT INTO item
 (status_item, numero_patrimonio, nome_item, modelo, numero_serie, voltagem, descricao, num_ri, id_fornecedor)
 VALUES
-('MANUTENCAO', 'PAT-1002', 'Impressora Laser', 'HP LaserJet Pro', 'SN-HP-002', '220V', 'Impressora em manutenção', 'NR-002', 4);
+('MANUTENCAO', '0002', 'Impressora Laser', 'HP LaserJet Pro', 'SN-HP-002', '220V', 'Impressora em manutenção', '6001', 4);
 
 INSERT INTO item
 (status_item, numero_patrimonio, nome_item, modelo, numero_serie, voltagem, descricao, num_ri, id_fornecedor)
 VALUES
-('DESCARTADO', 'PAT-1003', 'Monitor LED', 'Samsung 24"', 'SN-SAM-003', 'BIVOLT', 'Monitor descartado por defeito', 'NR-003', 5);
+('DESCARTADO', '0003', 'Monitor LED', 'Samsung 24"', 'SN-SAM-003', 'BIVOLT', 'Monitor descartado por defeito', '6003', 5);
 
 
 
