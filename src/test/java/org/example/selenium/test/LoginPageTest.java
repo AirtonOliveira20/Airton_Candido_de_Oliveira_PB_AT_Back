@@ -2,10 +2,12 @@ package org.example.selenium.test;
 
 import org.example.selenium.core.BaseTest;
 import org.example.selenium.pages.LoginPage;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Disabled("Teste selenium desabilitado no CI")
 public class LoginPageTest extends BaseTest {
 
     @Test

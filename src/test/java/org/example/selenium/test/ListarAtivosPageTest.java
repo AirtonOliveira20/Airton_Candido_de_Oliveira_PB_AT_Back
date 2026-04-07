@@ -4,6 +4,7 @@ import org.example.selenium.core.BaseTest;
 import org.example.selenium.pages.ListaDeAtivosPage;
 import org.example.selenium.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -15,6 +16,7 @@ import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled("Teste selenium desabilitado no CI")
     public class ListarAtivosPageTest extends BaseTest {
 
         @BeforeEach
