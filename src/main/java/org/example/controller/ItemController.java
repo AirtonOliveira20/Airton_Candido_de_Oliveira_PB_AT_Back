@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.apache.coyote.Response;
 import org.example.entity.Item;
+import org.example.entity.Usuario;
 import org.example.service.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,18 +27,21 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public Item buscarPorId(@PathVariable Integer id){
-        return itemService.findById(id);
+    public ResponseEntity<Item> buscarPorId(@PathVariable Integer id){
+
+        Item item = itemService.findById(id);
+        if (item == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(item);
     }
 
     @PostMapping
     public Item criarItem(@RequestBody Item item){
-        return itemService.save(item);
+        return itemService.adicionarItem(item);
     }
 
     @PutMapping("/{id}")
     public Item atualizarItem(@PathVariable Integer id, @RequestBody Item item){
-        return itemService.update(id, item);
+        return itemService.alterarItem(id, item);
     }
 
     @DeleteMapping("/{id}")

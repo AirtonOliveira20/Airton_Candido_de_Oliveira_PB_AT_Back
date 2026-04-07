@@ -1,0 +1,39 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches: [ "main"]
+  workflow_dispatch:
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Compilar e testar
+        run: mvn clean verify
+
+      - name: Salvar relatórios de teste
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-de-teste
+          path: target/surefire-reports
+
+      - name: Salvar arquivo JAR
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+         name: build-jar
+         path: target/*.jar

@@ -82,7 +82,7 @@ public class UsuarioControllerTest {
     public void deveCriarUsuario() throws Exception {
         Usuario usuarioFake = criarUsuarioMock();
 
-        when(usuarioService.save(any(Usuario.class))).thenReturn(usuarioFake);
+        when(usuarioService.adicionarUsuario(any(Usuario.class))).thenReturn(usuarioFake);
 
         String json = """
         {
@@ -104,7 +104,7 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("$.emailUsuario").value("airton@email.com"))
                 .andExpect(jsonPath("$.tipoUsuario").value("ADMIN"));
 
-        verify(usuarioService).save(any(Usuario.class));
+        verify(usuarioService).adicionarUsuario(any(Usuario.class));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class UsuarioControllerTest {
         usuarioAtualizado.setNomeUsuario("Airton Oliveira");
         usuarioAtualizado.setTipoUsuario("OPERADOR");
 
-        when(usuarioService.update(eq(1), any(Usuario.class))).thenReturn(usuarioAtualizado);
+        when(usuarioService.alterarUsuario(eq(1), any(Usuario.class))).thenReturn(usuarioAtualizado);
 
         String json = """
         {
@@ -135,7 +135,7 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("$.nomeUsuario").value("Airton Oliveira"))
                 .andExpect(jsonPath("$.tipoUsuario").value("OPERADOR"));
 
-        verify(usuarioService).update(eq(1), any(Usuario.class));
+        verify(usuarioService).alterarUsuario(eq(1), any(Usuario.class));
     }
 
     @Test

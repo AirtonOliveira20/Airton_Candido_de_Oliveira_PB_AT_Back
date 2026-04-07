@@ -33,7 +33,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok(usuarioService.save(usuario));
+        return ResponseEntity.ok(usuarioService.adicionarUsuario(usuario));
     }
 
     @PutMapping("/{id}")
@@ -41,7 +41,7 @@ public class UsuarioController {
             @PathVariable Integer id,
             @RequestBody Usuario dados) {
 
-        Usuario atualizado = usuarioService.update(id, dados);
+        Usuario atualizado = usuarioService.alterarUsuario(id, dados);
         if (atualizado == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(atualizado);
     }

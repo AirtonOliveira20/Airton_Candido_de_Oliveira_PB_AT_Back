@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static io.micrometer.common.util.StringUtils.isBlank;
+
 @Service
 public class UsuarioService {
 
@@ -17,24 +19,37 @@ public class UsuarioService {
     }
 
     public List<Usuario> findAll() {
+
         return (List<Usuario>) UsuarioRepository.findAll();
     }
 
     public Usuario findById(Integer id) {
+        validarId(id);
         Optional<Usuario> Usuario = UsuarioRepository.findById(id);
         return Usuario.orElse(null);
     }
 
-    public Usuario save(Usuario Usuario) {
+    public Usuario adicionarUsuario(Usuario usuario) {
+        if (!validarUsuario(usuario)) {
+            return null;
+        }
 
-        return UsuarioRepository.save(Usuario);
+        Optional<Usuario> usuarioExistente = UsuarioRepository.findByEmailUsuario(usuario.getEmailUsuario());
+
+        if (usuarioExistente.isPresent()) {
+            System.out.println("Já existe um usuário com esse e-mail");
+            return null;
+        }
+
+        return UsuarioRepository.save(usuario);
     }
 
-    public Usuario update(Integer id, Usuario dados) {
-        Optional<Usuario> opt = UsuarioRepository.findById(id);
-        if (opt.isEmpty()) return null;
+    public Usuario alterarUsuario(Integer id, Usuario dados) {
+        validarId(id);
+        Optional<Usuario> usuarioEncontrado = UsuarioRepository.findById(id);
+        if (usuarioEncontrado.isEmpty()) return null;
 
-        Usuario usuario = opt.get();
+        Usuario usuario = usuarioEncontrado.get();
         usuario.setNomeUsuario(dados.getNomeUsuario());
         usuario.setEmailUsuario(dados.getEmailUsuario());
         usuario.setLoginUsuario(dados.getLoginUsuario());
@@ -59,5 +74,51 @@ public class UsuarioService {
                 .orElse(null);
     }
 
+    private boolean validarUsuario(Usuario usuario) {
+        if (usuario == null) {
+            System.out.println("Os dados do usuário são obrigatórios.");
+            return false;
+        }
 
+        if (isBlank(usuario.getNomeUsuario())) {
+            System.out.println("O nome do usuário é obrigatório.");
+            return false;
+        }
+
+        if (isBlank(usuario.getEmailUsuario())) {
+            System.out.println("O e-mail é obrigatório.");
+            return false;
+        }
+
+        if (!usuario.getEmailUsuario().contains("@")) {
+            System.out.println("E-mail inválido.");
+            return false;
+        }
+
+        if (isBlank(usuario.getLoginUsuario())) {
+            System.out.println("O login do usuário é obrigatório.");
+            return false;
+        }
+
+        if (isBlank(usuario.getSenhaUsuario())) {
+            System.out.println("A senha é obrigatória.");
+            return false;
+        }
+
+        if (isBlank(usuario.getTipoUsuario())) {
+            System.out.println("O tipo do usuário é obrigatório.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validarId(Integer id) {
+        if (id == null || id <= 0) {
+            System.out.println("ID inválido.");
+            return false;
+        }
+
+        return true;
+    }
 }

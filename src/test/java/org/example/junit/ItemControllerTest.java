@@ -85,11 +85,22 @@ public class ItemControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar erro ao buscar item inexistente")
+    public void deveRetornarNotFoundAoBuscarItemInexistente() throws Exception {
+        when(itemService.findById(99)).thenReturn(null);
+
+        mockMvc.perform(get("/itens/99"))
+                .andExpect(status().isNotFound());
+
+        verify(itemService).findById(99);
+    }
+
+    @Test
     @DisplayName("Criar item")
     public void deveCriarItem() throws Exception {
         Item itemFakeParaTeste = criarItemMock();
 
-        when(itemService.save(any(Item.class))).thenReturn(itemFakeParaTeste);
+        when(itemService.adicionarItem(any(Item.class))).thenReturn(itemFakeParaTeste);
 
         String json = """
         {
@@ -114,7 +125,7 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.numeroSerie").value("SN-DELL-001"))
                 .andExpect(jsonPath("$.statusItem").value("ATIVO"));
 
-        verify(itemService).save(any(Item.class));
+        verify(itemService).adicionarItem(any(Item.class));
     }
 
     @Test
@@ -138,7 +149,6 @@ public class ItemControllerTest {
     @DisplayName("Excluir item inexistente")
     public void deveExcluirItemQueNaoExiste() throws Exception {
 
-
         when(itemService.findById(3)).thenReturn(null);
 
         mockMvc.perform(delete("/itens/3"))
@@ -154,7 +164,7 @@ public class ItemControllerTest {
         itemAtualizado.setNomeItem("Notebook Atualizado");
         itemAtualizado.setModelo("Latitude");
 
-        when(itemService.update(eq(1), any(Item.class))).thenReturn(itemAtualizado);
+        when(itemService.alterarItem(eq(1), any(Item.class))).thenReturn(itemAtualizado);
 
         String json = """
         {
@@ -177,7 +187,7 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.nomeItem").value("Notebook Atualizado"))
                 .andExpect(jsonPath("$.modelo").value("Latitude"));
 
-        verify(itemService).update(eq(1), any(Item.class));
+        verify(itemService).alterarItem(eq(1), any(Item.class));
     }
 
 }
