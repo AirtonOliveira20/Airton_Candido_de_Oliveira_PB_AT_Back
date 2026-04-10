@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{JAVA_VERSION}}
+          java-version: ${{ env.JAVA_VERSION }}
           cache: maven
 
       - name: Versões do java e do mvn
