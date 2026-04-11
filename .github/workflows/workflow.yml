@@ -24,10 +24,13 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: maven
 
-      - name: Versões do java e do mvn
-        run: |
-          java -version
-          mvn -version
+      - name: Versão do java
+        run: java -version
+
+
+      - name: Versão do mvn
+        run: mvn -version
+
 
       - name: Limpar build anterior
         run: mvn clean
