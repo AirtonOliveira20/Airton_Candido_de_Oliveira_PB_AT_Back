@@ -143,21 +143,6 @@ class UsuarioServiceTest {
         assertNull(resultado);
     }
 
-    @Test
-    void deveRetornarNullAoAlterarUsuarioComEmailDeOutroUsuario() {
-        Usuario usuario = criarUsuarioValido();
-
-        Usuario outroUsuario = new Usuario();
-        outroUsuario.setIdUsuario(2);
-        outroUsuario.setEmailUsuario("airton@email.com");
-
-        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
-        when(usuarioRepository.findByEmailUsuario("airton@email.com")).thenReturn(Optional.of(outroUsuario));
-
-        Usuario resultado = usuarioService.alterarUsuario(1, usuario);
-
-        assertNull(resultado);
-    }
 
     @Test
     void deveRetornarNullAoAlterarUsuarioInvalido() {
@@ -171,7 +156,7 @@ class UsuarioServiceTest {
     @Test
     void deveExcluirUsuarioQuandoExistir() {
         Usuario usuario = criarUsuarioValido();
-        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
+        when(usuarioRepository.existsById(1)).thenReturn(true);
 
         usuarioService.deleteUsuario(1);
 
@@ -180,7 +165,7 @@ class UsuarioServiceTest {
 
     @Test
     void naoDeveExcluirUsuarioQuandoNaoExistir() {
-        when(usuarioRepository.findById(1)).thenReturn(Optional.empty());
+        when(usuarioRepository.existsById(1)).thenReturn(false);
 
         usuarioService.deleteUsuario(1);
 

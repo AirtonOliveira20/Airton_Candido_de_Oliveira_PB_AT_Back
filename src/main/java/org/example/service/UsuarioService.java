@@ -61,6 +61,7 @@ public class UsuarioService {
     }
 
     public boolean deleteUsuario(Integer id) {
+        validarId(id);
         if (UsuarioRepository.existsById(id)) {
             UsuarioRepository.deleteById(id);
             return true;
@@ -113,12 +114,9 @@ public class UsuarioService {
         return true;
     }
 
-    private boolean validarId(Integer id) {
+    private void validarId(Integer id) {
         if (id == null || id <= 0) {
-            System.out.println("ID inválido.");
-            return false;
+            throw new IllegalArgumentException("ID inválido.");
         }
-
-        return true;
     }
 }
