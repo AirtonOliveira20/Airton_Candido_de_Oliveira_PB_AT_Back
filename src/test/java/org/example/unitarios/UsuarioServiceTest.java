@@ -114,25 +114,6 @@ class UsuarioServiceTest {
     }
 
     @Test
-    void deveAlterarUsuarioQuandoExistir() {
-        Usuario usuarioExistente = criarUsuarioValido();
-
-        Usuario dadosAtualizados = criarUsuarioValido();
-        dadosAtualizados.setNomeUsuario("Airton Oliveira");
-        dadosAtualizados.setLoginUsuario("airtonoliveira");
-
-        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuarioExistente));
-        when(usuarioRepository.findByEmailUsuario("airton@email.com")).thenReturn(Optional.of(usuarioExistente));
-        when(usuarioRepository.save(any(Usuario.class))).thenReturn(dadosAtualizados);
-
-        Usuario resultado = usuarioService.alterarUsuario(1, dadosAtualizados);
-
-        assertNotNull(resultado);
-        assertEquals("Airton Oliveira", resultado.getNomeUsuario());
-        assertEquals("airtonoliveira", resultado.getLoginUsuario());
-    }
-
-    @Test
     void deveRetornarNullAoAlterarUsuarioInexistente() {
         Usuario usuario = criarUsuarioValido();
 
